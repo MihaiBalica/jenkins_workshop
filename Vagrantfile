@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "jenkins-slave" do |slave|
     slave.vm.provider :libvirt do |libvirt|
       libvirt.driver = "qemu"
-      libvirt.memory = 1024
-      libvirt.cpus = 1
+      libvirt.memory = 2048
+      libvirt.cpus = 2
     end
     slave.vm.box = "generic/ubuntu2004"
     slave.vm.hostname = "jenkins-slave"
