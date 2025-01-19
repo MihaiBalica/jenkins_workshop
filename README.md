@@ -50,24 +50,23 @@ Open a browser and go to http://192.168.122.10:8080/ to access Jenkins on the ma
 - Create an admin user.
 - Set the Jenkins URL to http://192.168.122.10:8080
 
-### Add the Jenkins Slave
-- Go to Manage Jenkins > Manage Nodes and Clouds > New Node
-- Enter a name for the node (e.g., jenkins-slave)
-- Select Permanent Agent
-- Enter the following information:
-	•	Remote root directory: /var/lib/jenkins
-	•	Labels: jenkins-slave
-	•	Launch method: Launch agent via SSH
-	•	Host:
-- Connect to the jenkins-slave VM using the following command:
-```bash
-vagrant ssh jenkins-slave
+#### Configure Jenkins
+- install plugins
+  - Pipeline
+  - allure
+  - ssh agent
+  - junit
+
+### Add the Jenkins Slave in Docker container
+```shell
+docker run -d \
+  --name jenkins-agent \
+  -e JENKINS_URL=http://<MASTER_IP>:8080 \
+  -e JENKINS_SECRET=<AGENT_SECRET> \
+  -e JENKINS_AGENT_NAME=agent1 \
+  jenkins/inbound-agent
 ```
-Connect the jenkins-slave VM using the following command:
-```bash
-vagrant ssh jenkins-slave
-java -jar agent.jar -jnlpUrl http://192.168.122.10:8080 -secret <secret> -workDir "/var/lib/jenkins"
-```
+
 
 
 ## Cleanup
