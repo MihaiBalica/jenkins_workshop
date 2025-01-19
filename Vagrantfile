@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
       libvirt.memory = 2048
       libvirt.cpus = 3
     end
-    master.vm.box = "generic/ubuntu2404"
+    master.vm.box = "bento/ubuntu-24.04"
     master.vm.hostname = "jenkins-master"
     master.vm.network "private_network", ip: "192.168.122.10"
     master.vm.provision "shell", inline: <<-SHELL
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
       libvirt.memory = 2048
       libvirt.cpus = 3
     end
-    slave.vm.box = "generic/ubuntu2404"
+    slave.vm.box = "bento/ubuntu-24.04"
     slave.vm.hostname = "jenkins-slave"
     slave.vm.network "private_network", ip: "192.168.122.11"
     slave.vm.provision "shell", inline: <<-SHELL
