@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-master
+    ports:
+      - "8080:8080"   # Jenkins web interface
+      - "50000:50000" # Jenkins agent port
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    # environment:
+    #   - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    restart: unless-stopped
+
+  agent:
+    image: jenkins/inbound-agent
+    container_name: jenkins-agent
+    environment:
+      - JENKINS_URL=http://jenkins-master:8080
+      - JENKINS_AGENT_NAME=jenkins-agent
+      - JENKINS_SECRET=f7c6497b021ee38845298923e3a50bbfb435e2d213124c4d47bbc860f449c143
+    depends_on:
+      - jenkins
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
