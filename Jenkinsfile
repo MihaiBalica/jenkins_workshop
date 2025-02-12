@@ -1,7 +1,12 @@
 pipeline {
     // Use a specific node by label (e.g., 'python') if you've assigned one to your agent.
     // Otherwise, "agent any" will use any available node.
-    agent { label 'python' }
+    agent { 
+        docker {
+            image 'python:3.8'
+            args '-u root:root'
+        }
+     }
 
     stages {
         stage('Checkout') {
@@ -25,6 +30,11 @@ pipeline {
                     // Publish the test results in Jenkins.
                     junit 'results.xml'
                 }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the project... in the wind!'
             }
         }
     }
